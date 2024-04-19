@@ -22,14 +22,14 @@ jobs:
       - name: Install dependencies
         uses: bahmutov/npm-install@v1.10.1
 
-      - name: Build project
-        run: yarn build
+      - name: Build storybook
+        run: yarn build-storybook
 
       - name: Upload built files
         uses: actions/upload-artifact@v2
         with:
           name: preview-files
-          path: ./dist
+          path: ./storybook-static
 
   deploy:
     name: Deploy
@@ -42,10 +42,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: preview-files
-          path: ./dist
+          path: ./storybook-static
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./storybook-static
